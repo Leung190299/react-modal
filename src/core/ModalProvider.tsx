@@ -87,17 +87,15 @@ function ModalProvider() {
         }
     }, [updateTrigger, buildModal]);
 
-    const renderModal = (content: React.ReactNode, props: Modal.OptionsModalContext) => {
-        const isVisible = modalIds[props.id] || false;
-        return <BaseModalWeb key={props.id} isOpen={isVisible} {...(props as Modal.OptionsModalContext)}>{content}</BaseModalWeb>;
-    }
-
-        return (
+    return (
         <>
             {Array.from(modalRender.values()).map(({ content, data: props }) => {
+                const isVisible = modalIds[props.id] || false;
                 return (
                     <ModalContext.Provider key={props.id} value={props}>
-                       { renderModal(content, props) }
+                        <BaseModalWeb isOpen={isVisible} {...(props as Modal.OptionsModalContext)}>
+                            {content}
+                        </BaseModalWeb>
                     </ModalContext.Provider>
                 );
             })}
