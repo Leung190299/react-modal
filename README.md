@@ -1,49 +1,37 @@
-# React Modal
+# @leung99/react-modal
 
-A flexible and animated modal library for React and React Native with GSAP (web) and Reanimated (mobile) animations.
+A flexible and powerful modal library for React with beautiful GSAP animations. Support centered modals and bottom sheets with customizable styles.
 
 ## ✨ Features
 
-- 🎨 **Smooth Animations**: GSAP for web, React Native Reanimated for mobile
-- 📱 **Cross-Platform**: Works on both web and React Native
-- 🎭 **Two Modal Types**: Centered modal and bottom sheet
-- 🎯 **Easy to Use**: Simple API with modal manager
-- 🎨 **Customizable Styles**: Support for custom styling
-- ⚡ **Lightweight**: Minimal dependencies
-- 🔧 **TypeScript Support**: Full type definitions included
+- 🎨 **Smooth Animations**: Powered by GSAP for fluid, professional animations
+- 🎭 **Two Modal Types**: Centered modal with scale animation and bottom sheet with slide-up effect
+- 🎯 **Simple API**: Event-based modal manager for opening modals from anywhere
+- 💅 **Highly Customizable**: Custom styles via className or inline styles
+- ⚡ **Lightweight**: Minimal dependencies, optimized performance
+- 🔧 **TypeScript**: Full type definitions included
+- ♻️ **React Hooks**: Built with modern React patterns
 
 ## 📦 Installation
 
-### For Web Projects
-
 ```bash
-npm install @your-username/react-modal gsap
+npm install @leung99/react-modal gsap
 # or
-yarn add @your-username/react-modal gsap
+yarn add @leung99/react-modal gsap
 # or
-pnpm add @your-username/react-modal gsap
+pnpm add @leung99/react-modal gsap
 ```
 
-### For React Native Projects
-
-```bash
-npm install @your-username/react-modal react-native-reanimated
-# or
-yarn add @your-username/react-modal react-native-reanimated
-# or
-pnpm add @your-username/react-modal react-native-reanimated
-```
-
-For React Native Reanimated setup, follow their [installation guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation).
+**Note**: GSAP is a peer dependency and must be installed separately.
 
 ## 🚀 Quick Start
 
-### 1. Wrap your app with ModalProvider
+### 1. Add ModalProvider to your app
 
-#### Web (React)
+Place the `ModalProvider` component at the root level of your app (typically in `App.tsx` or `_app.tsx`):
 
 ```tsx
-import { ModalProvider } from '@your-username/react-modal';
+import { ModalProvider } from '@leung99/react-modal';
 
 function App() {
   return (
@@ -52,25 +40,7 @@ function App() {
       <YourComponents />
       
       {/* Add ModalProvider at the end */}
-      <ModalProvider platform="web" />
-    </>
-  );
-}
-```
-
-#### Mobile (React Native)
-
-```tsx
-import { ModalProvider } from '@your-username/react-modal';
-
-function App() {
-  return (
-    <>
-      {/* Your app content */}
-      <YourComponents />
-      
-      {/* Add ModalProvider at the end */}
-      <ModalProvider platform="mobile" />
+      <ModalProvider />
     </>
   );
 }
@@ -79,12 +49,11 @@ function App() {
 ### 2. Open a modal from anywhere
 
 ```tsx
-import { modal } from '@your-username/react-modal';
+import { modal } from '@leung99/react-modal';
 
 function MyComponent() {
-  const openModal = () => {
+  const handleOpen = () => {
     modal.open({
-      id: 'my-modal',
       render: ({ close, done }) => (
         <div>
           <h2>Hello Modal!</h2>
@@ -93,25 +62,28 @@ function MyComponent() {
         </div>
       ),
       onClose: () => console.log('Modal closed'),
-      onDone: (data) => console.log('Modal submitted:', data),
+      onDone: (data) => console.log('Submitted:', data),
     });
   };
 
-  return <button onClick={openModal}>Open Modal</button>;
+  return <button onClick={handleOpen}>Open Modal</button>;
 }
 ```
 
-### 3. Use with useModal hook (inside modal content)
+### 3. Use with useModal hook
+
+The `useModal` hook provides access to modal context when used inside modal content:
 
 ```tsx
-import { useModal } from '@your-username/react-modal';
+import { modal, useModal } from '@leung99/react-modal';
 
 function ModalContent() {
-  const { close, done } = useModal();
+  const { close, done, id } = useModal();
   
   return (
     <div>
       <h2>Modal Content</h2>
+      <p>Modal ID: {id}</p>
       <button onClick={close}>Cancel</button>
       <button onClick={() => done({ value: 'data' })}>Submit</button>
     </div>
@@ -121,7 +93,7 @@ function ModalContent() {
 // Open it
 modal.open({
   id: 'content-modal',
-  render: ModalContent,
+  render: <ModalContent />,
 });
 ```
 
@@ -129,59 +101,74 @@ modal.open({
 
 ### `modal.open(options)`
 
-Open a new modal with the specified options.
+Opens a new modal with the specified configuration.
 
-**Options:**
+#### Options
 
-| Property | Type | Required | Description |
-|----------|------|----------|-------------|
-| `id` | `string` | Yes | Unique identifier for the modal |
-| `render` | `React.ReactNode \| Component` | Yes | Content to render inside modal |
-| `type` | `'modal' \| 'bottomSheet'` | No | Modal type (default: `'modal'`) |
-| `isButtonClose` | `boolean` | No | Show close button (default: `true`) |
-| `styleOverlay` | `string \| CSSProperties \| StyleProp` | No | Custom overlay style |
-| `styleBoxContent` | `string \| CSSProperties \| StyleProp` | No | Custom content box style |
-| `styleButtonClose` | `string \| CSSProperties \| StyleProp` | No | Custom close button style |
-| `onClose` | `() => void` | No | Callback when modal closes |
-| `onDone` | `(data) => void` | No | Callback when modal submits |
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `id` | `string` | ✅ Yes | - | Unique identifier for the modal |
+| `render` | `ReactNode \| Component` | ✅ Yes | - | Modal content to render |
+| `type` | `'modal' \| 'bottomSheet'` | No | `'modal'` | Type of modal animation |
+| `isButtonClose` | `boolean` | No | `true` | Show/hide the close button (×) |
+| `styleOverlay` | `string \| CSSProperties` | No | - | Custom styles for the overlay backdrop |
+| `styleBoxContent` | `string \| CSSProperties` | No | - | Custom styles for the modal content box |
+| `styleButtonClose` | `string \| CSSProperties` | No | - | Custom styles for the close button |
+| `onClose` | `() => void` | No | - | Callback when modal is closed |
+| `onDone` | `(data) => void \| Promise<any>` | No | - | Callback when done() is called |
+
+#### Render Props
+
+When using a function component for `render`, it receives these props:
+
+```tsx
+interface ModalRenderProps<T = any> {
+  close: () => void;          // Close the modal
+  done: (data: T) => void;    // Submit data and close
+}
+```
 
 ### `useModal()`
 
-Hook to access modal context inside modal content.
+Hook to access modal context. Must be used inside modal content.
 
 **Returns:**
 
 ```tsx
 {
-  close: () => void;      // Close the modal
-  done: (data) => void;   // Submit and close with data
-  id: string;             // Modal ID
+  id: string;                    // Modal ID
+  close: () => void;             // Close the modal
+  done: (data: any) => void;     // Submit and close with data
+  type?: 'modal' | 'bottomSheet'; // Modal type
+  isButtonClose?: boolean;       // Close button visibility
+  styleOverlay?: string | CSSProperties;
+  styleBoxContent?: string | CSSProperties;
+  styleButtonClose?: string | CSSProperties;
   // ... other modal options
 }
 ```
 
 ### `<ModalProvider />`
 
-Provider component to manage modals.
+Provider component that manages and renders all modals. Must be included once in your app.
 
-**Props:**
-
-| Property | Type | Required | Default | Description |
-|----------|------|----------|---------|-------------|
-| `platform` | `'web' \| 'mobile'` | No | `'web'` | Platform to render for |
+```tsx
+<ModalProvider />
+```
 
 ## 🎨 Examples
 
-### Centered Modal
+### Basic Centered Modal
 
 ```tsx
+import { modal } from '@leung99/react-modal';
+
 modal.open({
-  id: 'centered-modal',
-  type: 'modal', // default
+  id: 'basic-modal',
   render: ({ close }) => (
     <div style={{ padding: '20px', minWidth: '300px' }}>
-      <h2>Centered Modal</h2>
-      <p>This appears in the center with scale animation</p>
+      <h2>Basic Modal</h2>
+      <p>This is a centered modal with scale animation</p>
       <button onClick={close}>Close</button>
     </div>
   ),
@@ -197,24 +184,33 @@ modal.open({
   render: ({ close }) => (
     <div style={{ padding: '20px' }}>
       <h2>Bottom Sheet</h2>
-      <p>This slides up from the bottom</p>
+      <p>This slides up from the bottom of the screen</p>
       <button onClick={close}>Close</button>
     </div>
   ),
 });
 ```
 
-### Custom Styled Modal (Web)
+### Custom Styled Modal
+
+You can use CSS classes or inline styles:
 
 ```tsx
+// Using CSS class
 modal.open({
-  id: 'custom-modal',
-  render: ({ close }) => <YourComponent />,
-  styleOverlay: 'custom-overlay-class', // or inline style object
+  render: <YourComponent />,
+  styleOverlay: 'my-custom-overlay',
+  styleBoxContent: 'my-custom-content',
+});
+
+// Using inline styles
+modal.open({
+  render: <YourComponent />,
   styleBoxContent: {
     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     borderRadius: '16px',
     padding: '32px',
+    color: 'white',
   },
   styleButtonClose: {
     color: 'white',
@@ -222,137 +218,118 @@ modal.open({
 });
 ```
 
-### With Form Data
+### Form Modal with Data Submission
 
 ```tsx
 import { useState } from 'react';
+import { modal, useModal } from '@leung99/react-modal';
 
-function FormModal({ close, done }) {
+function FormModal() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const { close, done } = useModal();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     done({ name, email });
   };
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-      <h2>Enter Your Info</h2>
+    <form onSubmit={handleSubmit} style={{ minWidth: '300px' }}>
+      <h2>Contact Form</h2>
       <input
+        type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Name"
+        required
       />
       <input
+        type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
-        type="email"
+        required
       />
-      <button type="submit">Submit</button>
-      <button type="button" onClick={close}>Cancel</button>
+      <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
+        <button type="button" onClick={close}>Cancel</button>
+        <button type="submit">Submit</button>
+      </div>
     </form>
   );
 }
 
+// Open and handle submission
 modal.open({
   id: 'form-modal',
-  render: FormModal,
-  onDone: (data) => {
-    console.log('Form submitted:', data);
-    // Handle form data
+  render: <FormModal />,
+  onDone: async (data) => {
+    console.log('Form data:', data);
+    // You can perform async operations here
+    await sendToAPI(data);
   },
 });
 ```
 
-### React Native Example
+### Modal Without Close Button
 
 ```tsx
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { modal } from '@your-username/react-modal';
-
-function MyScreen() {
-  const openBottomSheet = () => {
-    modal.open({
-      id: 'native-sheet',
-      type: 'bottomSheet',
-      render: ({ close }) => (
-        <View style={styles.sheet}>
-          <Text style={styles.title}>Bottom Sheet</Text>
-          <TouchableOpacity onPress={close} style={styles.button}>
-            <Text style={styles.buttonText}>Close</Text>
-          </TouchableOpacity>
-        </View>
-      ),
-      styleBoxContent: {
-        backgroundColor: '#fff',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-      },
-    });
-  };
-
-  return (
-    <TouchableOpacity onPress={openBottomSheet}>
-      <Text>Open Bottom Sheet</Text>
-    </TouchableOpacity>
-  );
-}
-
-const styles = StyleSheet.create({
-  sheet: {
-    padding: 20,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 16,
-  },
-  button: {
-    backgroundColor: '#007bff',
-    padding: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '600',
-  },
+modal.open({
+  id: 'no-close-btn',
+  isButtonClose: false,
+  render: ({ close }) => (
+    <div>
+      <h2>No Close Button</h2>
+      <p>You must use the button below to close</p>
+      <button onClick={close}>Done</button>
+    </div>
+  ),
 });
 ```
 
 ## 🎬 Animation Details
 
-### Web (GSAP)
-- **Centered Modal**: Scale from 0.8 to 1 with back ease and fade in
-- **Bottom Sheet**: Slide up from bottom with smooth easing
-- **Overlay**: Fade in/out
+### Centered Modal
+- **Entry**: Scale from 0.8 to 1.0 with back easing + fade in + slight upward movement
+- **Exit**: Scale down to 0.8 with fade out + downward movement
+- **Duration**: 400ms entry, 300ms exit
 
-### Mobile (Reanimated)
-- **Centered Modal**: Spring animation with scale and fade
-- **Bottom Sheet**: Slide up animation with spring physics
-- **Overlay**: Fade in/out
+### Bottom Sheet
+- **Entry**: Slide up from bottom (translateY: 100% → 0)
+- **Exit**: Slide down to bottom (translateY: 0 → 100%)
+- **Duration**: 400ms entry, 300ms exit
+
+### Overlay
+- **Entry**: Fade in (opacity: 0 → 1) over 300ms
+- **Exit**: Fade out (opacity: 1 → 0) over 200ms
+
+All animations use GSAP's `power2` easing for smooth, professional motion.
 
 ## 🔧 TypeScript
 
-Full TypeScript support included. All types are exported:
+Full TypeScript support with comprehensive type definitions:
 
 ```tsx
-import type { Modal } from '@your-username/react-modal';
+import type { Modal } from '@leung99/react-modal';
 
-// Access type definitions
+// Available types
 type ModalOptions = Modal.ModalOptions;
 type BaseModalProps = Modal.BaseModalProps;
+type OptionsModalContext = Modal.OptionsModalContext;
 ```
 
 ## 📝 License
 
-MIT
+MIT © [Leung190299](https://github.com/Leung190299)
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](https://github.com/Leung190299/react-modal/issues).
 
 ## 📮 Support
 
-If you have any questions or issues, please open an issue on GitHub.
+If you like this project, please give it a ⭐️ on [GitHub](https://github.com/Leung190299/react-modal)!
+
+For questions or issues, please [open an issue](https://github.com/Leung190299/react-modal/issues).

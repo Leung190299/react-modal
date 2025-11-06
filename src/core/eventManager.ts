@@ -8,9 +8,8 @@ function addEventListener() {
         callback();
     });
 }
-
 function dispatchEvent<T= any>( options: Modal.ModalOptions<T>) {
-    const id= options.id|| randomId();
+    const id= options.id || randomId();
     eventManager.set(id, options);
     addEventListener();
 }
@@ -20,5 +19,5 @@ function modal(options: Modal.ModalOptions) {
 }
 modal.open = dispatchEvent;
 
-export { modal, eventManager, listeners };
+export { eventManager, listeners, modal };
 

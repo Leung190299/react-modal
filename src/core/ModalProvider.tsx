@@ -4,14 +4,11 @@ import { eventManager, listeners } from "./eventManager";
 
 const ModalContext = createContext<Modal.OptionsModalContext>({} as Modal.OptionsModalContext);
 
-function ModalProvider<P extends 'web' | 'mobile' = 'web'>({platform = 'web' as P}: {platform?: P}) {
+function ModalProvider() {
     const [modalIds, setModalIds] = useState<Record<string, boolean>>({})
     const [updateTrigger, setUpdateTrigger] = useState(0);
     const modalRender = useRef(new Map<string, { content: React.ReactNode; data: Modal.OptionsModalContext }>()).current;
 
-    if (platform === 'mobile') {
-        throw new Error('Mobile platform is not supported in web build. Please use the React Native build for mobile support.');
-    }
 
      useEffect(() => {
         // Subscribe to modal changes
@@ -92,7 +89,7 @@ function ModalProvider<P extends 'web' | 'mobile' = 'web'>({platform = 'web' as 
 
     const renderModal = (content: React.ReactNode, props: Modal.OptionsModalContext) => {
         const isVisible = modalIds[props.id] || false;
-        return <BaseModalWeb key={props.id} isOpen={isVisible} {...(props as Modal.OptionsModalContextWeb)}>{content}</BaseModalWeb>;
+        return <BaseModalWeb key={props.id} isOpen={isVisible} {...(props as Modal.OptionsModalContext)}>{content}</BaseModalWeb>;
     }
 
         return (

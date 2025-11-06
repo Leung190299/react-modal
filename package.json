@@ -1,7 +1,7 @@
 {
   "name": "@leung99/react-modal",
-  "version": "1.0.1",
-  "description": "A flexible and animated modal library for React and React Native with GSAP and Reanimated animations",
+  "version": "2.0.0",
+  "description": "A flexible and animated modal library for React  with GSAP animations",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -18,8 +18,7 @@
     "popup",
     "bottomsheet",
     "animation",
-    "gsap",
-    "reanimated"
+    "gsap"
   ],
   "author": "Your Name <your.email@example.com>",
   "license": "MIT",
@@ -53,7 +52,6 @@
     "vite": "^7.2.1"
   },
   "dependencies": {
-    "gsap": "^3.13.0",
-    "react-native-reanimated": "^4.1.3"
+    "gsap": "^3.13.0"
   }
 }

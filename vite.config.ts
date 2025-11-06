@@ -7,7 +7,10 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  optimizeDeps: {
-    exclude: ['react-native-reanimated'],
+
+  resolve: {
+    alias: {
+      'react-native': 'react-native-web',
+    },
   },
 });

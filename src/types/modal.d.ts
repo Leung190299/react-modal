@@ -8,18 +8,12 @@ declare namespace Modal {
 		onDone?(data: T): void | Promise<any>;
 	}
 
-	interface OptionsModalContextWeb extends ModalOptions, Omit<BaseModalProps, 'children' | 'isOpen'> {
+	interface OptionsModalContext extends ModalOptions, Omit<BaseModalProps, 'children' | 'isOpen'> {
 		close: () => void;
 		done: (data: any) => void;
 	}
 
-	interface OptionsModalContextMobile extends ModalOptions, Omit<BaseModalMobileProps, 'children' | 'isOpen'> {
-		close: () => void;
-		done: (data: any) => void;
-	}
-
-	type OptionsModalContext = OptionsModalContextWeb | OptionsModalContextMobile;
-
+	
 	interface BaseModalProps {
 		isOpen: boolean;
 		type?: 'modal' | 'bottomSheet';

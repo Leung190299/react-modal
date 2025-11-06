@@ -186,7 +186,7 @@ function App() {
         </button>
       </div>
 
-      <ModalProvider platform="web" />
+      <ModalProvider />
     </div>
   );
 }
