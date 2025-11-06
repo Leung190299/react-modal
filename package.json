@@ -1,0 +1,58 @@
+{
+  "name": "@leung190299/react-modal",
+  "version": "1.0.0",
+  "description": "A flexible and animated modal library for React and React Native with GSAP and Reanimated animations",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "react",
+    "react-native",
+    "modal",
+    "dialog",
+    "popup",
+    "bottomsheet",
+    "animation",
+    "gsap",
+    "reanimated"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/react-modal.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/react-modal/issues"
+  },
+  "homepage": "https://github.com/your-username/react-modal#readme",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "vite",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=17",
+    "react-native": ">=0.68"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-native-web": "^0.21.2",
+    "vite": "^7.2.1"
+  },
+  "dependencies": {
+    "gsap": "^3.13.0",
+    "react-native-reanimated": "^4.1.3"
+  }
+}
