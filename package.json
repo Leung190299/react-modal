@@ -1,6 +1,6 @@
 {
-  "name": "@leung190299/react-modal",
-  "version": "1.0.0",
+  "name": "@leung99/react-modal",
+  "version": "1.0.1",
   "description": "A flexible and animated modal library for React and React Native with GSAP and Reanimated animations",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -25,12 +25,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/react-modal.git"
+    "url": "https://github.com/Leung190299/react-modal"
   },
   "bugs": {
-    "url": "https://github.com/your-username/react-modal/issues"
+    "url": "https://github.com/Leung190299/react-modal/issues"
   },
-  "homepage": "https://github.com/your-username/react-modal#readme",
+  "homepage": "https://github.com/Leung190299/react-modal#readme",
   "type": "module",
   "scripts": {
     "build": "tsc",
@@ -49,6 +49,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-native-web": "^0.21.2",
+    "typescript": "^5.9.3",
     "vite": "^7.2.1"
   },
   "dependencies": {

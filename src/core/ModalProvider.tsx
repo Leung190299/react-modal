@@ -10,7 +10,7 @@ function ModalProvider<P extends 'web' | 'mobile' = 'web'>({platform = 'web' as 
     const modalRender = useRef(new Map<string, { content: React.ReactNode; data: Modal.OptionsModalContext }>()).current;
 
     if (platform === 'mobile') {
-        throw new Error('Mobile platform is not supported in this build. Please use the native build for mobile support.');
+        throw new Error('Mobile platform is not supported in web build. Please use the React Native build for mobile support.');
     }
 
      useEffect(() => {
@@ -92,10 +92,7 @@ function ModalProvider<P extends 'web' | 'mobile' = 'web'>({platform = 'web' as 
 
     const renderModal = (content: React.ReactNode, props: Modal.OptionsModalContext) => {
         const isVisible = modalIds[props.id] || false;
-        if (platform === 'web') {
-            return <BaseModalWeb key={props.id} isOpen={isVisible} {...(props as Modal.OptionsModalContextWeb)}>{content}</BaseModalWeb>;
-        }
-        return null;
+        return <BaseModalWeb key={props.id} isOpen={isVisible} {...(props as Modal.OptionsModalContextWeb)}>{content}</BaseModalWeb>;
     }
 
         return (
