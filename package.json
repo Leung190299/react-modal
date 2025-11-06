@@ -1,6 +1,6 @@
 {
   "name": "@leung99/react-modal",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A flexible and animated modal library for React  with GSAP animations",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
